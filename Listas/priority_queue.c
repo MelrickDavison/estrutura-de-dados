@@ -29,7 +29,6 @@ void enqueue(priority_queue *pq, int i, int p){
     while((current->next != NULL) && (current->next->priority > p)){
       current = current->next;
     }
-    new_node->next = new_node->next;
     current->next = new_node;
   }
 }
