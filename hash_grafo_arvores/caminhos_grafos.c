@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+#include <math.h>
 #include <stdlib.h>
 
 typedef struct adj_list {
@@ -47,7 +49,6 @@ void add_edge(graph *g, int vertex1, int vertex2) {
 
 void dfs(graph *g, int source) {
     g->visited[source] = 1;
-    printf("%d\n", source);
     
     adj_list *adj = g->vertices[source];
     
@@ -59,7 +60,6 @@ void dfs(graph *g, int source) {
     }
 }
 
-// Função para liberar a memória alocada dinamicamente
 void free_graph(graph *g) {
     for (int i = 0; i < g->num_vertices; i++) {
         adj_list *current = g->vertices[i];
@@ -73,4 +73,29 @@ void free_graph(graph *g) {
     free(g->vertices);
     free(g->visited);
     free(g);
+}
+
+int main() {
+    int v, p;
+    scanf("%d %d", &v, &p);
+
+    graph *g = create_graph(v);
+    for (int i = 0; i < p; i++){
+        int v1, v2;
+        scanf("%d %d", &v1, &v2);
+        add_edge(g, v1, v2);
+    }
+
+    int s, d;
+    scanf("%d %d", &s, &d);
+    dfs(g, s);
+    if (g->visited[d] == 1) {
+        printf("EXISTE");
+    } else {
+        printf("NAO EXISTE");
+    }
+
+    free_graph(g);
+
+    return 0;
 }
